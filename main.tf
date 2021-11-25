@@ -16,7 +16,7 @@ data "google_storage_project_service_account" "gcss_sa" {
 
 
 resource "google_kms_crypto_key" "secrets" {
- name     = "my-appid-strg12-demo-key"
+ name     = "my-dev-appid-strg12-demo-key"
  key_ring = "projects/airline1-sabre-wolverine/locations/us/keyRings/savita-keyring-us"
  labels = {
     owner = "hybridenv"
@@ -70,7 +70,7 @@ resource "google_project_iam_binding" "dataproc" {
 }
 /*
 resource "google_storage_bucket" "dataproc_staging" {
- name                        = "my-appid-strg12-stage-gcsbucket"
+ name                        = "my-dev-appid-strg12-stage-gcsbucket"
  project                     = "airline1-sabre-wolverine"
  location                    = "us"
  # Enable CMEK
@@ -80,7 +80,7 @@ resource "google_storage_bucket" "dataproc_staging" {
 }
 
 resource "google_storage_bucket" "dataproc_temp" {
- name                        = "my-appid-strg12-temp-gcsbucket"
+ name                        = "my-dev-appid-strg12-temp-gcsbucket"
  project                     = "airline1-sabre-wolverine"
  location                    = "us"
  # Enable CMEK
@@ -120,7 +120,7 @@ resource "google_compute_firewall" "dataproc" {
 resource "google_dataproc_cluster" "example" {
  provider = google-beta # Required to enforce HTTPS config
  project  = data.google_project.project.project_id
- name     = "my-appid-strg12-demo-dpcluster"
+ name     = "my-dev-appid-strg12-demo-dpcluster"
  region   = "us-central1"
  labels   = {
     owner = "hybridenv"
@@ -141,16 +141,16 @@ resource "google_dataproc_cluster" "example" {
   
    # Disable plain HTTP
    endpoint_config {
-     enable_http_port_access = true
+     enable_http_port_access = false
    }
 
    # Use user-managed Service Account
    gce_cluster_config {
      tags                   = ["dataproc-tag"]
      subnetwork             = "projects/airline1-sabre-wolverine/regions/us-central1/subnetworks/us-dev-appid-syst-demo-subnet"
-     internal_ip_only       = false
-     #service_account        = google_service_account.dataproc_sa.email
-     service_account        = "dataproc-sa-compute@developer.gserviceaccount.com"
+     internal_ip_only       = true
+     service_account        = google_service_account.dataproc_sa.email
+     #service_account        = "dataproc-sa-compute@developer.gserviceaccount.com"
      service_account_scopes = [
        "cloud-platform"
      ]
