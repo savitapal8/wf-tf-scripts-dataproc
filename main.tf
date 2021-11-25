@@ -8,12 +8,12 @@ data "google_storage_project_service_account" "gcss_sa" {
 
 
 resource "google_kms_crypto_key" "secrets" {
- name     = "my-dev-appid-strg-demo1-key"
+ name     = "my-dev-appid-strg12-demo-key"
  key_ring = "projects/airline1-sabre-wolverine/locations/us/keyRings/savita-keyring-us"
 }
 
 resource "google_service_account" "dataproc_sa" {
- account_id   = "dataproc1-sa"
+ account_id   = "dataproc12-sa"
  display_name = "DataProc Service Account"
  project      = data.google_project.project.project_id
 }
@@ -52,7 +52,7 @@ resource "google_project_iam_binding" "dataproc" {
 }
 /*
 resource "google_storage_bucket" "dataproc_staging" {
- name                        = "my-dev-appid-strg1-stage-gcsbucket"
+ name                        = "my-dev-appid-strg12-stage-gcsbucket"
  project                     = "airline1-sabre-wolverine"
  location                    = "us"
  # Enable CMEK
@@ -62,7 +62,7 @@ resource "google_storage_bucket" "dataproc_staging" {
 }
 
 resource "google_storage_bucket" "dataproc_temp" {
- name                        = "my-dev-appid-strg1-temp-gcsbucket"
+ name                        = "my-dev-appid-strg12-temp-gcsbucket"
  project                     = "airline1-sabre-wolverine"
  location                    = "us"
  # Enable CMEK
@@ -79,7 +79,7 @@ resource "google_kms_crypto_key_iam_member" "dataproc_gcs_encryption" {
 
 resource "google_compute_firewall" "dataproc" {
  project     = "airline1-sabre-wolverine"
- name        = "allow-tcp-udp-icmp-dataproc1-fw"
+ name        = "allow-tcp-udp-icmp-dataproc12-fw"
  network     = "projects/airline1-sabre-wolverine/regions/us-central1/networks/us-dev-appid-syst-demo-vpc"
  description = "Enable Dataproc master and nodes connectivity"
 
@@ -102,7 +102,7 @@ resource "google_compute_firewall" "dataproc" {
 resource "google_dataproc_cluster" "example" {
  provider = google-beta # Required to enforce HTTPS config
  project  = data.google_project.project.project_id
- name     = "my-dev-appid-strg1-demo-dpcluster"
+ name     = "my-dev-appid-strg12-demo-dpcluster"
  region   = "us-central1"
  labels   = {
     owner = "hybridenv"
