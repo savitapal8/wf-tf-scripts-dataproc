@@ -18,6 +18,16 @@ data "google_storage_project_service_account" "gcss_sa" {
 resource "google_kms_crypto_key" "secrets" {
  name     = "my-dev-appid-strg12-demo-key"
  key_ring = "projects/airline1-sabre-wolverine/locations/us/keyRings/savita-keyring-us"
+ labels = {
+    owner = "hybridenv"
+    application_division = "pci"
+    application_name = "app1"
+    application_role = "auth"
+    au = "0223092"
+    gcp_region = "us" 
+    environment = "dev" 
+    created = "20211124" 
+  }
 }
 
 resource "google_service_account" "dataproc_sa" {
