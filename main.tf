@@ -160,5 +160,9 @@ resource "google_dataproc_cluster" "example" {
    #staging_bucket  = google_storage_bucket.dataproc_staging.id
    #temp_bucket     = google_storage_bucket.dataproc_temp.id
  }
+  
+ depends_on = [
+      google_service_account.dataproc_sa, google_project_iam_member.dataproc_workers
+]
 }
 
