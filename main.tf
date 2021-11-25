@@ -1,3 +1,11 @@
+provider "google" {
+  access_token          = var.access_token
+}
+
+provider "google-beta"{
+  access_token          = var.access_token
+}
+
 data "google_project" "project" {
   project_id =  "airline1-sabre-wolverine"
 }
