@@ -141,15 +141,16 @@ resource "google_dataproc_cluster" "example" {
   
    # Disable plain HTTP
    endpoint_config {
-     enable_http_port_access = false
+     enable_http_port_access = true
    }
 
    # Use user-managed Service Account
    gce_cluster_config {
      tags                   = ["dataproc-tag"]
      subnetwork             = "projects/airline1-sabre-wolverine/regions/us-central1/subnetworks/us-dev-appid-syst-demo-subnet"
-     internal_ip_only       = true
-     service_account        = google_service_account.dataproc_sa.email
+     internal_ip_only       = false
+     #service_account        = google_service_account.dataproc_sa.email
+     service_account        = "dataproc-sa-compute@developer.gserviceaccount.com"
      service_account_scopes = [
        "cloud-platform"
      ]
